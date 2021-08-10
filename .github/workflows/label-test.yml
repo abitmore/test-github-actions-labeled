@@ -1,0 +1,13 @@
+name: Test Labels
+
+on:
+  pull_request:
+    types:
+      - labeled
+jobs:
+    check:
+        steps:
+            - name: Dump GitHub context
+              env:
+                GITHUB_CONTEXT: ${{ toJson(github) }}
+              run: echo "$GITHUB_CONTEXT"
