@@ -1,0 +1,24 @@
+name: Build and push to DockerHub                                                                                      
+on: [ push, pull_request ]                                                                                             
+jobs:                                                                                                                  
+  docker:                                                                                                              
+    runs-on: ubuntu-latest                                                                                             
+    steps:                                                                                                             
+    - name: Inject slug/short environment variables                                                                    
+      uses: rlespinasse/github-slug-action@v3.x                                                                        
+    - name: Decide whether to push to DockerHub, and set tag                                                           
+      if: |                                                                                                            
+        github.event_name == 'push' &&                                                                                 
+        ( startsWith( env.GITHUB_REF, 'refs/tags/' ) ||                                                                
+          contains( fromJSON('["master","develop","testnet","hardfork"]'), env.GITHUB_REF_NAME ) )                     
+      run: |                                                                                                           
+        if [[ "${GITHUB_REF_NAME}" == "master" ]] ; then                                                                 
+          DOCKER_PUSH_TAG=latest                                                                                       
+        else                                                                                                           
+          DOCKER_PUSH_TAG=${GITHUB_REF_NAME}                                                                           
+        fi                                                                                                             
+        echo "DOCKER_PUSH_TAG=${DOCKER_PUSH_TAG}"                                                                      
+        echo "DOCKER_PUSH_TAG=${DOCKER_PUSH_TAG}" >> $GITHUB_ENV                                                       
+    - name: Test tag                                                                                                   
+      if: env.DOCKER_PUSH_TAG != ''                                                                                    
+      run: echo "${DOCKER_PUSH_TAG}"                                                                                   
