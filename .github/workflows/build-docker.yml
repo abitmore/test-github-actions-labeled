@@ -6,7 +6,7 @@ jobs:
     steps:                                                                                                             
     - name: Inject slug/short environment variables                                                                    
       uses: rlespinasse/github-slug-action@v3.x
-    - run: echo "$env.GITHUB_REF"
+    - run: echo "$GITHUB_REF"
     - name: Decide whether to push to DockerHub, and set tag
       if: |                                                                                                            
         github.event_name == 'push' &&                                                                                 
