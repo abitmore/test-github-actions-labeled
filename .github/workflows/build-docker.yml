@@ -12,7 +12,7 @@ jobs:
     - name: Decide whether to push to DockerHub, and set tag
       if: |                                                                                                            
         github.event_name == 'push' &&                                                                                 
-        ( startsWith( env.GITHUB_REF, 'refs/tags/' ) ||                                                                
+        ( startsWith( ${{ env.GITHUB_REF }}, 'refs/tags/' ) ||                                                                
           contains( fromJSON('["master","develop","testnet","hardfork"]'), env.GITHUB_REF_NAME ) )                     
       run: |                                                                                                           
         if [[ "${GITHUB_REF_NAME}" == "master" ]] ; then                                                                 
