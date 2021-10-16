@@ -7,7 +7,7 @@ jobs:
     - name: Inject slug/short environment variables                                                                    
       uses: rlespinasse/github-slug-action@v3.x
     - run: echo "$GITHUB_REF"
-    - if: startsWith( env.GITHUB_REF, 'refs/' )
+    - if: startsWith( env.GITHUB_REF, 'refs\/' )
       run: echo "$GITHUB_REF"
     - name: Decide whether to push to DockerHub, and set tag
       if: |                                                                                                            
