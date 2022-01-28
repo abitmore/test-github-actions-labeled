@@ -20,9 +20,7 @@ jobs:
         echo "---------------" >> deploy/README.md
         date -u +%Y-%m-%dT%H:%M:%S >> deploy/README.md
     - name: Push
-      uses: s0/git-publish-subdir-action@master
+      uses: gautamkrishnar/keepalive-workflow@master
       env:
-        REPO: self
-        BRANCH: update-time
-        FOLDER: deploy
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        time_elapsed: 0
