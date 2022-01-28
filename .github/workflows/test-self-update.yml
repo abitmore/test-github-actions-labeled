@@ -5,7 +5,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-  - cron: "15 20 * * 5"
+  - cron: "18 20 * * 5"
 
 jobs:
   update:
@@ -23,6 +23,6 @@ jobs:
       uses: s0/git-publish-subdir-action@master
       env:
         REPO: self
-        BRANCH: update-time
+        BRANCH: main
         FOLDER: .
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
