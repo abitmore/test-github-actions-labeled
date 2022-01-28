@@ -18,4 +18,4 @@ jobs:
         time_elapsed: -1
         committer_username: abitmore
         committer_email: abitmore@users.noreply.github.com
-        gh_token: {{ secrets.GITHUB_TOKEN }}
+        gh_token: ${{ secrets.GITHUB_TOKEN }}
