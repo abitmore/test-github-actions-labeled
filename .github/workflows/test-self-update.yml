@@ -19,10 +19,10 @@ jobs:
         echo "Auto-deployment" > deploy/README.md
         echo "---------------" >> deploy/README.md
         date -u +%Y-%m-%dT%H:%M:%S >> deploy/README.md
-    - name: Deploy
+    - name: Push
       uses: s0/git-publish-subdir-action@master
       env:
         REPO: self
         BRANCH: update-time
-        FOLDER: deploy
+        FOLDER: .
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
