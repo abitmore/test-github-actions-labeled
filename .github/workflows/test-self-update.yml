@@ -23,6 +23,6 @@ jobs:
       uses: s0/git-publish-subdir-action@master
       env:
         REPO: self
-        BRANCH: main
-        FOLDER: .
+        BRANCH: update-time
+        FOLDER: deploy
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
