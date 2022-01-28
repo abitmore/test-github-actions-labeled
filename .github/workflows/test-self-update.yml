@@ -15,6 +15,6 @@ jobs:
     - uses: actions/checkout@v2
     - uses: abitmore/keepalive-workflow@master
       with:
-        time_elapsed: 0
+        time_elapsed: -1
         committer_username: abitmore
         committer_email: abitmore@users.noreply.github.com
