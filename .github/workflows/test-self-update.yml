@@ -5,7 +5,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-  - cron: "18 20 * * 5"
+  - cron: "48 20 * * 5"
 
 jobs:
   update:
@@ -13,13 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Get timestamp
-      run: |
-        mkdir deploy || true
-        echo "Auto-deployment" > deploy/README.md
-        echo "---------------" >> deploy/README.md
-        date -u +%Y-%m-%dT%H:%M:%S >> deploy/README.md
-    - name: Push
-      uses: gautamkrishnar/keepalive-workflow@master
+    - uses: abitmore/keepalive-workflow@master
       with:
         time_elapsed: 0
+        committer_username: abitmore
+        committer_email: abitmore@users.noreply.github.com
