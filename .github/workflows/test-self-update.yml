@@ -22,7 +22,7 @@ jobs:
     - name: Deploy
       uses: s0/git-publish-subdir-action@master
       env:
-        REPO: git@github.com:abitmore/test-github-actions.git
+        REPO: self
         BRANCH: update-time
         FOLDER: deploy
-        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_FOR_ACTIONS_TEST_REPO }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
