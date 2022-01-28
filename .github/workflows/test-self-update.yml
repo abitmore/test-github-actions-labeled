@@ -5,7 +5,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
   schedule:
-  - cron: "19 20 * * 5"
+  - cron: "48 19 * * 5"
 
 jobs:
   update:
