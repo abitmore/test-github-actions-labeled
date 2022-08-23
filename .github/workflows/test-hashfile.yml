@@ -39,3 +39,4 @@ jobs:
           echo "::set-output name=dmghash2::${{ hashFiles('build/binaries/*.dmg') }}"
           echo "::set-output name=debhash2::${{ hashFiles('build/binaries/*.deb') }}"
           echo "::set-output name=exehash2::${{ hashFiles('build/binaries/*.exe') }}"
+          echo "::set-output name=dmghash3::${{ hashFiles('build/binaries/file.dmg') }}"
