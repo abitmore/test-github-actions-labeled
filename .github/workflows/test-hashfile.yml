@@ -43,3 +43,4 @@ jobs:
           echo "::set-output name=dmghash4::${{ hashFiles('build/binaries/file2.dmg') }}"
           echo "${{ hashFiles('build/binaries/file.dmg') }}"
           echo "${{ hashFiles('build/binaries/file2.dmg') }}"
+          echo "::set-output name=dmghash5::$(sha256sum build/binaries/file2.dmg|cut -c-64)"
