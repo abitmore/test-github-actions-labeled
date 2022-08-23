@@ -31,7 +31,8 @@ jobs:
           echo "deb" > build/binaries/file.deb
           echo "exe" > build/binaries/file.exe
           sha256sum build/binaries/*
-      - name: Check hash
+      - name: Calc hash
+        id: calc_hash
         run: |
           echo "::set-output name=dmghash::${{ hashFiles('build/binaries/**.dmg') }}"
           echo "::set-output name=debhash::${{ hashFiles('build/binaries/**.deb') }}"
@@ -46,3 +47,6 @@ jobs:
           dmghash5=`sha256sum build/binaries/file.dmg|cut -c-64`
           echo ${dmghash5}
           echo "::set-output name=dmghash5::${dmghash5}"
+      - name: check output
+        run: |
+          echo "dmg hash: ${{steps.calc_hash.outputs.dmghash5}}"
