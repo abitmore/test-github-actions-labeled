@@ -47,7 +47,7 @@ jobs:
           dmghash5=`sha256sum build/binaries/file.dmg|cut -c-64`
           echo ${dmghash5}
           echo "::set-output name=dmghash5::${dmghash5}"
-          echo "::set-output name=dmghash6::$(sha256sum build/binanries/*.dmg|cut -c-64)"
+          echo "::set-output name=dmghash6::$(sha256sum build/binaries/*.dmg|cut -c-64)"
       - name: check output
         run: |
           echo "dmg hash 5: ${{steps.calc_hash.outputs.dmghash5}}"
