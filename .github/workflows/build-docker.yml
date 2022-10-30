@@ -1,9 +1,9 @@
-name: Build and push to DockerHub                                                                                      
-on: [ push, pull_request ]                                                                                             
-jobs:                                                                                                                  
-  docker:                                                                                                              
-    runs-on: ubuntu-latest                                                                                             
-    steps:                                                                                                             
+name: Build and push to DockerHub
+on: [ push, pull_request ]
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
     - name: echo ref
       run: echo "$GITHUB_REF"
     - name: echo ref if it is a tag
@@ -13,18 +13,18 @@ jobs:
       if: startsWith( github.ref, 'refs/heads/' )
       run: echo "$GITHUB_REF"
     - name: Decide whether to push to DockerHub, and set tag
-      if: |                                                                                                            
-        github.event_name == 'push' &&                                                                                 
-        ( startsWith( github.ref, 'refs/tags/' ) ||                                                                
-          contains( fromJSON('["master","develop","testnet","hardfork"]'), github.ref_name ) )                     
-      run: |                                                                                                           
-        if [ "${GITHUB_REF_NAME}" == "master" ] ; then                                                                 
-          DOCKER_PUSH_TAG=latest                                                                                       
-        else                                                                                                           
-          DOCKER_PUSH_TAG=${GITHUB_REF_NAME}                                                                           
-        fi                                                                                                             
-        echo "DOCKER_PUSH_TAG=${DOCKER_PUSH_TAG}"                                                                      
-        echo "DOCKER_PUSH_TAG=${DOCKER_PUSH_TAG}" >> $GITHUB_ENV                                                       
-    - name: Test tag                                                                                                   
-      if: env.DOCKER_PUSH_TAG != ''                                                                                    
-      run: echo "${DOCKER_PUSH_TAG}"                                                                                   
+      if: |
+        github.event_name == 'push' &&
+        ( startsWith( github.ref, 'refs/tags/' ) ||
+          contains( fromJSON('["master","develop","testnet","hardfork"]'), github.ref_name ) )
+      run: |
+        if [ "${GITHUB_REF_NAME}" == "master" ] ; then
+          DOCKER_PUSH_TAG=latest
+        else
+          DOCKER_PUSH_TAG=${GITHUB_REF_NAME}
+        fi
+        echo "DOCKER_PUSH_TAG=${DOCKER_PUSH_TAG}"
+        echo "DOCKER_PUSH_TAG=${DOCKER_PUSH_TAG}" >> $GITHUB_ENV
+    - name: Test tag
+      if: env.DOCKER_PUSH_TAG != ''
+      run: echo "${DOCKER_PUSH_TAG}"
