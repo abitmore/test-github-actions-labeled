@@ -35,10 +35,11 @@ jobs:
 
   job2:
     name: Job 2
+    needs: job1
     strategy:
       matrix:
         es: [ "es7", "es8" ]
-    runs-on: ${{ jobs.job1.runs-on }}
+    runs-on: ${{ needs.job1.runs-on }}
     steps:
       - name: Echo ES version
         run: echo ${{ matrix.es }}
