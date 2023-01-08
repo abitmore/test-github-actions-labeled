@@ -19,7 +19,9 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
     
-    concurrency: ${{ github.workflow }}-${{ github.ref }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
