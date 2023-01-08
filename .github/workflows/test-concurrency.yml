@@ -19,6 +19,8 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
     
+    # this is buggy, 4 runs are brought up, but 2 of them are canceled
+    # see https://github.com/community/community/discussions/5435
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: false
