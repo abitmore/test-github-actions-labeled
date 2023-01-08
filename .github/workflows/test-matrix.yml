@@ -41,6 +41,9 @@ jobs:
     strategy:
       matrix:
         es: [ "es7", "es8" ]
+    # This does not work as expected, can only get one output,
+    # although job1 runs twice due to matrix
+    # See https://github.com/community/community/discussions/17245
     runs-on: ${{ needs.job1.outputs.runs-on }}
     steps:
       - name: Echo ES version
