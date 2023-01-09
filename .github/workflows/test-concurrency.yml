@@ -6,23 +6,26 @@ on:
   push:
     branches: [ "main" ]
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   job1:
     name: Job 1
     strategy:
       matrix:
         os: [ ubuntu-20.04, ubuntu-22.04 ]
-        es: [ "es7", "es8" ]
-    # The type of runner that the job will run on
+        es: [ "es7", "es8", "es9" ]
+      # we start 6 jobs.
+      # we would like that 2 jobs run at the same time, one for each os, with a random es.
+      # when a job with one es is done, run with another es for the same os.
+      # setting max-parallel to 2 does not guarantee that 2 jobs are for different OS's.
+      # see https://github.com/orgs/community/discussions/26774
+      # max-parallel: 2
     runs-on: ${{ matrix.os }}
     
-    # this is buggy, 4 runs are brought up, but 2 of them are canceled
+    # this is buggy, 6 runs are brought up, but only 4 will run, others are canceled
     # see https://github.com/community/community/discussions/5435
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.os }}
       cancel-in-progress: false
 
     # Steps represent a sequence of tasks that will be executed as part of the job
