@@ -1,0 +1,62 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test Hashfile with environment files
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Install coreutils for macOS
+        if: matrix.os == 'macos-latest'
+        run: brew install coreutils
+
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a set of commands using the runners shell
+      - name: Create files
+        run: |
+          mkdir -p build/binaries
+          echo "dmg" > build/binaries/file.dmg
+          echo "deb" > build/binaries/file.deb
+          echo "exe" > build/binaries/file.exe
+          sha256sum build/binaries/*
+      - name: Calc hash
+        id: calc_hash
+        run: |
+          echo "dmghash=${{ hashFiles('build/binaries/**.dmg') }}" >> $GITHUB_OUTPUT
+          echo "debhash=${{ hashFiles('build/binaries/**.deb') }}" >> $GITHUB_OUTPUT
+          echo "exehash=${{ hashFiles('build/binaries/**.exe') }}" >> $GITHUB_OUTPUT
+          echo "dmghash2=${{ hashFiles('build/binaries/*.dmg') }}" >> $GITHUB_OUTPUT
+          echo "debhash2=${{ hashFiles('build/binaries/*.deb') }}" >> $GITHUB_OUTPUT
+          echo "exehash2=${{ hashFiles('build/binaries/*.exe') }}" >> $GITHUB_OUTPUT
+          echo "dmghash3=${{ hashFiles('build/binaries/file.dmg') }}" >> $GITHUB_OUTPUT
+          echo "dmghash4=${{ hashFiles('build/binaries/file2.dmg') }}" >> $GITHUB_OUTPUT
+          echo "${{ hashFiles('build/binaries/file.dmg') }}"
+          echo "${{ hashFiles('build/binaries/file2.dmg') }}"
+          dmghash5=`sha256sum build/binaries/file.dmg|cut -c-64`
+          echo ${dmghash5}
+          echo "dmghash5=${dmghash5}" >> $GITHUB_OUTPUT
+          echo "dmghash6=$(sha256sum build/binaries/*.dmg|cut -c-64)" >> $GITHUB_OUTPUT
+      - name: check output
+        run: |
+          echo "dmg hash 5: ${{steps.calc_hash.outputs.dmghash5}}"
+          echo "dmg hash 6: ${{steps.calc_hash.outputs.dmghash6}}"
